@@ -1,0 +1,6 @@
+; $Id$
+name = worker: Add worker form
+description = Adding new worker form
+package = Build a Module
+core = 7.x
+files[] = worker.module

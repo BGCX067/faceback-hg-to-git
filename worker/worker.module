@@ -1,0 +1,82 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Demonstrates use of the Form API.
+ *
+ * For a full list of elements and attributes, see:
+ * http://api.drupal.org/api/drupal/developer--topics--forms_api_reference.html/7
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function worker_menu() {
+  $items['worker/addworker'] = array(
+    'title' => 'Add worker',
+    'description' => 'Add new worker',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('worker_simple_form'),
+    'access callback' => TRUE,
+  );
+  return $items;
+}
+
+/**
+ * A simple form.
+ */
+function worker_simple_form($form, &$form_submit) {
+  $form['name'] = array(
+    '#title' => t('Worker Name'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#description' => t('What is the worker\'s name?')
+  );
+  $form['location'] = array(
+    '#title' => t('Location'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#description' => t('Where do they live?')
+  );
+  $form['socialstatus'] = array(
+    '#title' => t('Social Status'),
+    '#type' => 'textfield',
+    '#required' => FALSE,
+    '#description' => t('Is he married, single, have kids, ....')
+  );
+  $form['aspireto'] = array(
+    '#title' => t('Aspire To:'),
+    '#type' => 'textarea',
+    '#required' => TRUE,
+    '#description' => t('What does he need the money for?')
+  );
+  $form['photo'] = array(
+    '#type' => 'file',
+    '#title' => t('Photo'),
+    '#description' => t('Upload worker\'s photo')
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Save'
+  );
+  return $form;
+}
+
+/**
+ * Validation for worker_simple_form().
+ */
+function worker_simple_form_validate($form, &$form_state) {
+  //if ($form_state['values']['color'] == 'blue') {
+  //form_set_error('color', 'Sorry, your favorite color is actually yellow.');
+  //}
+}
+
+/**
+ * Submit function for worker_simple_form().
+ */
+function worker_simple_form_submit($form, &$form_state) {
+  
+  // Display a message upon successful submission.
+  drupal_set_message(t("Worker @name, has been saved!", array('@name' => $form_state['values']['name'])));
+}
